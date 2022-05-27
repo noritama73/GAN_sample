@@ -4,15 +4,12 @@
 生成敵対ネットワークの作成に必要なライブラリのインポート
 コードは主にPyTorchライブラリを使って開発されています
 """
-import time
 import torch
 import torch.nn as nn
 import torch.optim as optim
 from torch.utils.data import DataLoader
 from torchvision import datasets
 from torchvision.transforms import transforms
-import numpy as np
-import matplotlib.pyplot as plt
 
 from network import generator
 from network import discriminator

@@ -1,12 +1,6 @@
 # https://qiita.com/keiji_dl/items/45a5775a361151f9189d
 
-import time
-import torch
 import torch.nn as nn
-import torch.optim as optim
-from torch.utils.data import DataLoader
-from torchvision import datasets
-from torchvision.transforms import transforms
 
 """
 ネットワーク・アーキテクチャー
