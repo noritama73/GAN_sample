@@ -42,3 +42,42 @@ class generator(nn.Module):
         x = self.fc3(x)
         x = x.view(-1, 1, 28, 28)
         return nn.Tanh()(x)
+
+class Autoencoder(nn.Module):
+    def __init__(self):
+        super(Autoencoder, self).__init__()
+        self.dense_enc1 = nn.Linear(128, 512)
+        self.bn1 = nn.BatchNorm1d(512)
+        self.dense_enc2 = nn.Linear(512, 256)
+        self.bn2 = nn.BatchNorm1d(256)
+        self.dense_enc3 = nn.Linear(256,128)
+    
+        self.dense_dec1 = nn.Linear(128,256)
+        self.bn4 = nn.BatchNorm1d(256)
+        self.dense_dec2 = nn.Linear(256, 512)
+        self.bn5 = nn.BatchNorm1d(512)
+        self.drop1 = nn.Dropout(p=0.2)
+        self.dense_dec3 = nn.Linear(512, 784)
+        self.activation = nn.ReLU()
+
+    def encoder(self, x):
+        x = self.activation(self.dense_enc1(x))
+        x = self.bn1(x)
+        x = self.activation(self.dense_enc2(x))
+        x = self.bn2(x)
+        x = self.dense_enc3(x)
+        return x
+
+    def decoder(self, x):
+        x = self.activation(self.dense_dec1(x))
+        x = self.bn4(x)
+        x = self.activation(self.dense_dec2(x))
+        x = self.bn5(x)
+        x = self.drop1(x)
+        x = self.dense_dec3(x)
+        return x
+
+    def forward(self, x):
+        z = self.encoder(x)
+        x = self.decoder(z)
+        return x, z
